@@ -1,17 +1,10 @@
-# Use official Java 17 image
-FROM eclipse-temurin:17-jdk
-
-# Set working directory
+FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
-
-# Copy project files to container
 COPY . .
-
-# Build Spring Boot JAR (skip tests)
 RUN ./mvnw clean package -DskipTests
 
-# Expose port Spring Boot uses
+FROM eclipse-temurin:17-jre
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
-
-# Run the built jar
-CMD ["java", "-jar", "target/*.jar"]
+ENTRYPOINT ["java","-jar","app.jar"]
