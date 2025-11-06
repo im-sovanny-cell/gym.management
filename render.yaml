@@ -1,10 +1,10 @@
 services:
   - type: web
     name: gym-management-backend
-    runtime: java
-    repo: https://github.com/im-sovanny-cell/gym.management
-    buildCommand: "./mvnw clean package -DskipTests"
-    startCommand: "java -jar target/*.jar"
+    runtime: image
+    image:
+      buildCommand: "./mvnw clean package -DskipTests"
+      startCommand: "java -jar target/*.jar"
     envVars:
       - key: SPRING_DATASOURCE_URL
         sync: false
