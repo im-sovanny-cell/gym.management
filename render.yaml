@@ -1,10 +1,11 @@
 services:
   - type: web
     name: gym-management-backend
-    runtime: image
-    image:
-      buildCommand: "./mvnw clean package -DskipTests"
-      startCommand: "java -jar target/*.jar"
+    env: jar
+    build:
+      commands:
+        - ./mvnw clean package -DskipTests
+    startCommand: java -jar target/*.jar
     envVars:
       - key: SPRING_DATASOURCE_URL
         sync: false
